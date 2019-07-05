@@ -1,14 +1,31 @@
-expose:
-  Args: 
-    - --v
-    - 4
-  Annotations:
-    helm.sh/hook: post-install,post-upgrade
-    helm.sh/hook-delete-policy: hook-succeeded
-
+PipelineSecrets:
+  DockerConfig: '{"auths": {"docker-registry.default.svc:5000": {"auth": "c2VydmljZWFjY291bnQ6ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNklpSjkuZXlKcGMzTWlPaUpyZFdKbGNtNWxkR1Z6TDNObGNuWnBZMlZoWTJOdmRXNTBJaXdpYTNWaVpYSnVaWFJsY3k1cGJ5OXpaWEoyYVdObFlXTmpiM1Z1ZEM5dVlXMWxjM0JoWTJVaU9pSnFaVzVyYVc1emVDSXNJbXQxWW1WeWJtVjBaWE11YVc4dmMyVnlkbWxqWldGalkyOTFiblF2YzJWamNtVjBMbTVoYldVaU9pSnFaVzVyYVc1ekxYZ3RjbVZuYVhOMGNua3RkRzlyWlc0dE5EZHRjRzRpTENKcmRXSmxjbTVsZEdWekxtbHZMM05sY25acFkyVmhZMk52ZFc1MEwzTmxjblpwWTJVdFlXTmpiM1Z1ZEM1dVlXMWxJam9pYW1WdWEybHVjeTE0TFhKbFoybHpkSEo1SWl3aWEzVmlaWEp1WlhSbGN5NXBieTl6WlhKMmFXTmxZV05qYjNWdWRDOXpaWEoyYVdObExXRmpZMjkxYm5RdWRXbGtJam9pWVdKbE16ZGlNREl0T1dWallpMHhNV1U1TFdFeFlURXRaVFJoT0dJMlkyTTBOMlF5SWl3aWMzVmlJam9pYzNsemRHVnRPbk5sY25acFkyVmhZMk52ZFc1ME9tcGxibXRwYm5ONE9tcGxibXRwYm5NdGVDMXlaV2RwYzNSeWVTSjkucTYyangzLXE2SFFPNTNURjdsdnVVY29YS2VjTlpDZ0pPcEVzRkREYUVqODhBX1V4dUpfdUtBVGsxUUJfXzZ1SExpaXdQZnllbEJOTVd3YkNiamFwc2RjazZDNG5jMUpKTUdhSTF4NVZ0V3pHcFJTN3VFQld5dDJZM0FmM1dNY3NJQzBmaTZELXJWam1VMndZV045ZHliZVVvZjN5NV9lbWFNSXIySGhCQmdVMENXTC00dHdJZGFPX0tyaWs5WmVheWNmVlEyUEUwSTZ0cVh4Z2UwWFllQS1qbFJMcXVtYkF4X09KN192LUVRQjVrUU9UcHlCNGdxM1ZQelg3Ukllel9vQ1BhcWJuME5BcVlWcGpfbS1kMnFfSm5HMlA2aFpHTWUySkdOSmtXYlMxaG4tVEdhTi1DOVoxVDZBYk1LRDFud0ZhQWwwT2VCN3FMR0lsQUNNWFBB"}}}'
 cleanup:
-  Args: 
-    - --cleanup
   Annotations:
     helm.sh/hook: pre-delete
     helm.sh/hook-delete-policy: hook-succeeded
+  Args:
+  - --cleanup
+controllerbuild:
+  enabled: true
+controllerworkflow:
+  enabled: false
+dockerRegistry: docker-registry.default.svc:5000
+expose:
+  Annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: hook-succeeded
+  Args:
+  - --v
+  - 4
+  config:
+    domain: master.nip.io
+    exposer: Route
+    http: "true"
+jenkins:
+  Servers:
+    Global:
+      EnvVars:
+        TILLER_NAMESPACE: kube-system
+  enabled: false
+prow: {}
